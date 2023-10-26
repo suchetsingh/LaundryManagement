@@ -28,7 +28,7 @@ const porders = [
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
-
+//for checking order
 app.get("/checkorder", (req, res) => {
     // displayUserData();
     res.render('Checkorder');
@@ -40,7 +40,7 @@ app.post("/check", checkorder, (req, res) => {
         res.render('index', {orderresult});
 
 });
-
+//for deleting order
 app.get("/deleteorder", deleteorder, (req, res) => {
     res.render('deleteorder');
 });
@@ -49,15 +49,9 @@ app.post("/deleteorder", deleteorder, (req, res) => {
     res.render('index', {orderresult});
 });
 
-
+//for new user
 app.get("/newUser", (req, res) => {
     res.render('pages-sign-up');
-});
-app.get("/home", (req, res) => {
-    res.render('index',{orderresult: porders});
-});
-app.post("/home", (req, res) => {
-    res.render('index',{orderresult: porders});
 });
 
 app.post("/newUser", async (req, res) => {
@@ -66,11 +60,17 @@ app.post("/newUser", async (req, res) => {
     res.redirect('/');
 });
 
+app.get("/home", (req, res) => {
+    res.render('index',{orderresult: porders});
+});
+app.post("/home", (req, res) => {
+    res.render('index',{orderresult: porders});
+});
 // app.get("/", (req, res) => {
 //     console.log('/ route');
 //     res.render('index', { orderresult: porders });
 // });
-app.get("/", (req, res) => {
+app.get("/", (req, res) => { //for the first time this will run and will match the credentials
     console.log('/ route');
     res.render('signin');
 });
@@ -85,7 +85,7 @@ app.post("/",checkLogin,(req, res) => {
     }
 
 });
-app.post("/postOrders", (req, res) => {
+app.post("/orders", (req, res) => {
     const data = {
         userID: req.body.userID,
         date: getDateTime.getCurrentDate(),
